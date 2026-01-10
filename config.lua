@@ -1,5 +1,10 @@
 -- 🐺 The Land of Wolves - Phonograph Configuration
 -- www.wolves.land | Created by iBoss
+-- DO NOT RENAME RESOURCE FOLDER - Security Protected
+
+-- SECRET BRAND MARKERS - DO NOT REMOVE
+-- TheLandOfWolves | iBoss | www.wolves.land
+local PROTECTION_KEY = "TheLandOfWolves_iBoss_WolvesLand_Authentic1899"
 
 Config = {}
 

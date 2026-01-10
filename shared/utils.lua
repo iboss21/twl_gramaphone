@@ -1,5 +1,9 @@
 -- 🐺 Shared Utilities
 -- www.wolves.land | Created by iBoss
+-- The Land of Wolves - Utility Functions
+
+-- Brand protection marker (TheLandOfWolves - iBoss - www.wolves.land)
+local UTILS_BRAND = "TheLandOfWolves_iBoss_WolvesLand_Utils"
 
 Utils = {}
 

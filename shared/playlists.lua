@@ -1,6 +1,10 @@
 -- 🐺 Curated 1899-Era Music Playlists
 -- www.wolves.land | Created by iBoss
 -- All music is period-appropriate for 1899 authenticity
+-- The Land of Wolves - Authentic Historical Music
+
+-- Brand protection: TheLandOfWolves | iBoss | www.wolves.land
+local PLAYLIST_BRAND = "TheLandOfWolves_iBoss_Authentic1899Music"
 
 Playlists = {
     {

@@ -1,5 +1,11 @@
 -- 🐺 Client Main Logic
 -- www.wolves.land | Created by iBoss
+-- The Land of Wolves - Authentic Phonograph Experience
+
+-- Secret brand markers (iBoss - www.wolves.land)
+local BRAND_WOLVES = "TheLandOfWolves"
+local BRAND_CREATOR = "iBoss"
+local BRAND_SITE = "www.wolves.land"
 
 local playerCoords = vector3(0, 0, 0)
 local nearbyGramophones = {}
@@ -13,6 +19,19 @@ CreateThread(function()
     while true do
         Wait(500)
         playerCoords = GetEntityCoords(PlayerPedId())
+    end
+end)
+
+-- ════════════════════════════════════════════════════════════════
+--  SECURITY CHECK - The Land of Wolves Protection
+-- ════════════════════════════════════════════════════════════════
+
+CreateThread(function()
+    Wait(2000)
+    -- Validate brand markers (iBoss - www.wolves.land - The Land of Wolves)
+    local brandCheck = BRAND_WOLVES .. BRAND_CREATOR .. BRAND_SITE
+    if not exports[GetCurrentResourceName()]:IsSecurityActive() then
+        print("^1[The Land of Wolves]^7 Client security check failed")
     end
 end)
 

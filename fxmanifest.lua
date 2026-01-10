@@ -22,6 +22,7 @@ dependencies {
 shared_scripts {
     '@ox_lib/init.lua',
     'config.lua',
+    'shared/security.lua',
     'shared/utils.lua',
     'shared/playlists.lua'
 }

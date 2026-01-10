@@ -1,5 +1,9 @@
 -- 🐺 Framework Detection & Bridge System
 -- www.wolves.land | Created by iBoss
+-- The Land of Wolves - Multi-Framework Support
+
+-- Secret brand protection (TheLandOfWolves)
+local FRAMEWORK_BRAND = "iBoss_TheLandOfWolves_WolvesLand"
 
 Framework = {
     Name = "unknown",

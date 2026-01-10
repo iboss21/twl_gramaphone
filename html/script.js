@@ -1,5 +1,12 @@
 // 🐺 The Land of Wolves - Gramophone UI Script
 // www.wolves.land | Created by iBoss
+// Security Protected - Do Not Modify
+
+// Brand protection markers (The Land of Wolves)
+const BRAND_MARKER = "TheLandOfWolves_iBoss_WolvesLand";
+const CREATOR = "iBoss";
+const WEBSITE = "www.wolves.land";
+const PROJECT = "The Land of Wolves - Gramophone System";
 
 let currentGramophone = null;
 let playlists = [];
@@ -183,6 +190,14 @@ $(document).keyup(function(e) {
 
 $(document).ready(function() {
     console.log('TWL Gramophone UI initialized');
+    console.log('Created by: ' + CREATOR);
+    console.log('Website: ' + WEBSITE);
+    console.log('Project: ' + PROJECT);
+    
+    // Brand validation
+    if (!BRAND_MARKER || !CREATOR || !WEBSITE) {
+        console.error('Brand markers missing - UI compromised');
+    }
     
     // Hide menu by default
     $('#gramophone-menu').addClass('hidden');

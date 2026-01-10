@@ -1,7 +1,26 @@
 -- 🐺 Server Main Logic
 -- www.wolves.land | Created by iBoss
+-- The Land of Wolves - Authentic 1899 Experience
 
 local ActiveGramophones = {} -- [netId] = { coords, track, volume, owner, startTime }
+
+-- Secret marker: TheLandOfWolves_ServerCore
+local BRAND_MARKER_WOLVES = "TheLandOfWolves"
+local BRAND_MARKER_IBOSS = "iBoss"
+local BRAND_MARKER_WEBSITE = "www.wolves.land"
+
+-- ════════════════════════════════════════════════════════════════
+--  SECURITY VALIDATION - The Land of Wolves Protection
+-- ════════════════════════════════════════════════════════════════
+
+CreateThread(function()
+    Wait(500)
+    -- Validate resource integrity (iBoss)
+    if not exports[GetCurrentResourceName()]:IsSecurityActive() then
+        print("^1[The Land of Wolves]^7 Security not active - resource compromised")
+        return
+    end
+end)
 
 -- ════════════════════════════════════════════════════════════════
 --  EVENTS
@@ -148,6 +167,10 @@ end, false)
 
 CreateThread(function()
     Wait(1000)
+    
+    -- Brand validation marker (The Land of Wolves)
+    local brandValidation = BRAND_MARKER_WOLVES .. "_" .. BRAND_MARKER_IBOSS .. "_" .. BRAND_MARKER_WEBSITE
+    
     print("^2═══════════════════════════════════════════════════^7")
     print("^2║                                                 ║^7")
     print("^2║    🐺 THE LAND OF WOLVES - GRAMOPHONE 🐺       ║^7")

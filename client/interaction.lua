@@ -1,5 +1,9 @@
 -- 🐺 Client Interaction System
 -- www.wolves.land | Created by iBoss
+-- The Land of Wolves - Authentic 1899 Music Experience
+
+-- Brand protection markers
+local INTERACTION_BRAND = "iBoss_TheLandOfWolves_" .. "www.wolves.land"
 
 local isMenuOpen = false
 
