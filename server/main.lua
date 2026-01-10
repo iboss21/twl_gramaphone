@@ -30,7 +30,7 @@ local BRAND_MARKER_WEBSITE = "www.wolves.land"
 -- ════════════════════════════════════════════════════════════════
 
 CreateThread(function()
-    Wait(500)
+    Wait(Config.FrameworkInitDelay)
     -- Validate resource integrity (iBoss)
     if not exports[GetCurrentResourceName()]:IsSecurityActive() then
         print("^1[The Land of Wolves]^7 Security not active - resource compromised")
@@ -182,7 +182,7 @@ end, false)
 -- ════════════════════════════════════════════════════════════════
 
 CreateThread(function()
-    Wait(1000)
+    Wait(Config.ServerStartupDelay)
     
     -- Brand validation marker (The Land of Wolves)
     local brandValidation = BRAND_MARKER_WOLVES .. "_" .. BRAND_MARKER_IBOSS .. "_" .. BRAND_MARKER_WEBSITE
@@ -210,14 +210,14 @@ end)
 -- Auto-cleanup inactive gramophones
 CreateThread(function()
     while true do
-        Wait(60000) -- Check every minute
+        Wait(Config.InactiveGramophoneCleanup) -- Check every minute
         
         local currentTime = os.time()
         for netId, data in pairs(ActiveGramophones) do
-            -- If gramophone has been playing for longer than track duration + 30 seconds, clean it up
+            -- If gramophone has been playing for longer than track duration + buffer, clean it up
             if data.track and data.track.duration then
                 local elapsed = currentTime - data.startTime
-                if elapsed > (data.track.duration + 30) then
+                if elapsed > (data.track.duration + Config.TrackCleanupBuffer) then
                     Utils.Debug("Auto-cleaning up gramophone " .. netId .. " (inactive)")
                     ActiveGramophones[netId] = nil
                     TriggerClientEvent('twl_gramophone:client:stopTrack', -1, netId)

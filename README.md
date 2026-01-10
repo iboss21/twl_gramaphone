@@ -28,10 +28,22 @@ An immersive, multi-framework compatible phonograph/gramophone script for RedM t
 
 ## 📚 Documentation
 
-- **[Product Requirements Document (PRD)](./PRD.md)** - Complete project specification
-- **[Enhanced Features Guide](./ENHANCED_FEATURES.md)** - Advanced features and brainstorming
-- **[Installation Guide](#-installation)** - Quick setup instructions
+**[📖 Complete Documentation Index](./docs/README.md)** - All documentation in one place
+
+### Quick Links
+- **[Installation Guide](./docs/guides/INSTALL.md)** - Step-by-step installation instructions
 - **[Configuration Guide](#%EF%B8%8F-configuration)** - Customize to your needs
+- **[Contributing Guide](./docs/guides/CONTRIBUTING.md)** - How to contribute to the project
+
+### Technical Documentation
+- **[Product Requirements Document (PRD)](./docs/technical/PRD.md)** - Complete project specification
+- **[Project Structure](./docs/technical/PROJECT_STRUCTURE.md)** - Code architecture and file organization
+- **[Security Documentation](./docs/technical/SECURITY.md)** - Security features and best practices
+- **[Implementation Summary](./docs/technical/IMPLEMENTATION_SUMMARY.md)** - Implementation details
+
+### Reference
+- **[Enhanced Features Guide](./docs/reference/ENHANCED_FEATURES.md)** - Advanced features and future enhancements
+- **[Changelog](./docs/reference/CHANGELOG.md)** - Version history and release notes
 
 ---
 
@@ -218,7 +230,7 @@ The script automatically detects your framework and adapts accordingly. No code 
 - 🔌 Developer API
 - 🌍 Multi-language support
 
-See [ENHANCED_FEATURES.md](./ENHANCED_FEATURES.md) for detailed roadmap.
+See [ENHANCED_FEATURES.md](./docs/reference/ENHANCED_FEATURES.md) for detailed roadmap.
 
 ---
 
@@ -310,7 +322,7 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 - 🌐 **Website:** www.wolves.land
 - 📺 **YouTube:** Tutorial videos and showcases
 - 🐦 **Twitter:** @LandOfWolves (coming soon)
-- 📰 **Changelog:** Check [CHANGELOG.md](CHANGELOG.md) for updates
+- 📰 **Changelog:** Check [CHANGELOG.md](./docs/reference/CHANGELOG.md) for updates
 
 ---
 

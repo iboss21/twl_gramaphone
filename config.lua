@@ -14,10 +14,16 @@
     - Framework selection and detection
     - Interaction settings (keybind, distance, prompts)
     - Audio settings (volume, distance, spatial audio)
+    - Performance optimization timings (update intervals)
+    - UI & display settings (3D text, prompts)
+    - Keybind mapping (RedM control codes)
     - Phonograph prop models
     - Playlist and playback settings
     - Permission and economy systems
     - Notification preferences
+    - Debug settings
+    
+    Everything is now configurable - no need to edit client/server files!
 ]]
 
 -- SECRET BRAND MARKERS - DO NOT REMOVE
@@ -92,3 +98,43 @@ Config.UseOxLib = true -- Use ox_lib notifications (recommended)
 --  DEBUG SETTINGS
 -- ═══════════════════════════════════════════════════════════════
 Config.Debug = false -- Enable debug prints
+
+-- ═══════════════════════════════════════════════════════════════
+--  PERFORMANCE & OPTIMIZATION SETTINGS
+-- ═══════════════════════════════════════════════════════════════
+Config.PlayerPositionUpdateInterval = 500 -- milliseconds - how often to update player position
+Config.GramophoneDetectionInterval = 1000 -- milliseconds - how often to scan for nearby gramophones
+Config.AudioPositionUpdateInterval = 1000 -- milliseconds - how often to update audio positions for moving props
+Config.InactiveGramophoneCleanup = 60000 -- milliseconds - how often to check for inactive gramophones
+Config.SecurityCheckDelay = 2000 -- milliseconds - delay before running security validation
+Config.FrameworkInitDelay = 500 -- milliseconds - delay before framework initialization
+Config.LateJoinSyncDelay = 5000 -- milliseconds - delay before syncing gramophones for late joiners
+Config.SecurityMonitoringInterval = 30000 -- milliseconds - how often to run security checks
+Config.ServerStartupDelay = 1000 -- milliseconds - delay before server initialization
+
+-- ═══════════════════════════════════════════════════════════════
+--  UI & DISPLAY SETTINGS
+-- ═══════════════════════════════════════════════════════════════
+Config.Prompt3DHeightOffset = 1.0 -- units above gramophone to show 3D text
+Config.Prompt3DTextScale = 0.35 -- scale of 3D prompt text
+Config.Prompt3DText = "Press ~y~[ALT]~w~ to use Gramophone" -- text shown in 3D prompt
+Config.PromptMenuOpenDelay = 0 -- milliseconds - main thread delay when checking for menu open
+Config.PromptAwayDelay = 500 -- milliseconds - main thread delay when player is away from gramophone
+Config.MenuCloseCheckDelay = 0 -- milliseconds - main thread delay when checking for menu close (ESC)
+Config.MenuCloseAwayDelay = 500 -- milliseconds - main thread delay when menu is not open
+
+-- ═══════════════════════════════════════════════════════════════
+--  KEYBIND MAPPING
+-- ═══════════════════════════════════════════════════════════════
+Config.KeyMap = {
+    ['LMENU'] = 0xD8F73058, -- Left Alt (ALT)
+    ['E'] = 0xCEFD9220,
+    ['ENTER'] = 0xC7B5340A,
+    ['BACKSPACE'] = 0x156F7119,
+    ['ESC'] = 0x156F7119
+}
+
+-- ═══════════════════════════════════════════════════════════════
+--  ADVANCED AUDIO SETTINGS
+-- ═══════════════════════════════════════════════════════════════
+Config.TrackCleanupBuffer = 30 -- seconds - buffer time after track ends before auto-cleanup

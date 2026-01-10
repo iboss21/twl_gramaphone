@@ -33,7 +33,7 @@ activeGramophones = {} -- [netId] = sound object (global for access by other cli
 
 CreateThread(function()
     while true do
-        Wait(500)
+        Wait(Config.PlayerPositionUpdateInterval)
         playerCoords = GetEntityCoords(PlayerPedId())
     end
 end)
@@ -43,7 +43,7 @@ end)
 -- ════════════════════════════════════════════════════════════════
 
 CreateThread(function()
-    Wait(2000)
+    Wait(Config.SecurityCheckDelay)
     -- Validate brand markers (iBoss - www.wolves.land - The Land of Wolves)
     local brandCheck = BRAND_WOLVES .. BRAND_CREATOR .. BRAND_SITE
     if not exports[GetCurrentResourceName()]:IsSecurityActive() then
@@ -57,7 +57,7 @@ end)
 
 CreateThread(function()
     while true do
-        Wait(1000)
+        Wait(Config.GramophoneDetectionInterval)
         
         nearbyGramophones = {}
         
@@ -174,7 +174,7 @@ end)
 
 -- Request sync when player joins
 AddEventHandler('playerSpawned', function()
-    Wait(5000) -- Wait for player to fully load
+    Wait(Config.LateJoinSyncDelay) -- Wait for player to fully load
     
     -- Request sync for nearby gramophones
     for _, gramophone in pairs(nearbyGramophones) do

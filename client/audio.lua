@@ -55,7 +55,7 @@ end
 -- Update audio positions for moving gramophones (if prop is moved)
 CreateThread(function()
     while true do
-        Wait(1000)
+        Wait(Config.AudioPositionUpdateInterval)
         
         for netId, soundId in pairs(activeGramophones) do
             local entity = NetworkGetEntityFromNetworkId(netId)
