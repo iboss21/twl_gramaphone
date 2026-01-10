@@ -3,7 +3,7 @@
 
 local playerCoords = vector3(0, 0, 0)
 local nearbyGramophones = {}
-local activeGramophones = {} -- [netId] = sound object
+activeGramophones = {} -- [netId] = sound object (global for access by other client files)
 
 -- ════════════════════════════════════════════════════════════════
 --  PLAYER POSITION TRACKING
@@ -73,7 +73,7 @@ RegisterNetEvent('twl_gramaphone:client:playTrack', function(gramophoneNetId, pl
     local soundId = "gramophone_" .. gramophoneNetId
     
     -- Play sound using xsound
-    exports.xsound:PlayUrlPos(soundId, track.url, Config.DefaultVolume, gramophoneCoords, false)
+    exports.xsound:PlayUrlPos(soundId, track.url, Config.DefaultVolume, gramophoneCoords)
     exports.xsound:Distance(soundId, Config.MaxHearingDistance)
     
     activeGramophones[gramophoneNetId] = soundId
