@@ -183,7 +183,7 @@ end
 function Security.StartMonitoring()
     CreateThread(function()
         while Security.Initialized do
-            Wait(30000) -- Check every 30 seconds
+            Wait(Config.SecurityMonitoringInterval) -- Check every 30 seconds
             
             -- Verify resource name hasn't changed
             local currentName = GetCurrentResourceName()

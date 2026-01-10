@@ -29,15 +29,15 @@ local isMenuOpen = false
 
 CreateThread(function()
     while true do
-        Wait(0)
+        Wait(Config.PromptMenuOpenDelay)
         
         local nearestGramophone = GetNearestGramophone()
         
         if nearestGramophone and not isMenuOpen then
             -- Show 3D prompt if enabled
             if Config.ShowPrompt3D then
-                DrawText3D(nearestGramophone.coords.x, nearestGramophone.coords.y, nearestGramophone.coords.z + 1.0, 
-                    "Press ~y~[ALT]~w~ to use Gramophone")
+                DrawText3D(nearestGramophone.coords.x, nearestGramophone.coords.y, nearestGramophone.coords.z + Config.Prompt3DHeightOffset, 
+                    Config.Prompt3DText)
             end
             
             -- Check for keybind press
@@ -45,7 +45,7 @@ CreateThread(function()
                 OpenGramophoneMenu(nearestGramophone)
             end
         else
-            Wait(500)
+            Wait(Config.PromptAwayDelay)
         end
     end
 end)
@@ -128,7 +128,7 @@ function DrawText3D(x, y, z, text)
     scale = scale * fov
     
     if onScreen then
-        SetTextScale(0.0 * scale, 0.35 * scale)
+        SetTextScale(0.0 * scale, Config.Prompt3DTextScale * scale)
         SetTextFont(4)
         SetTextProportional(1)
         SetTextColour(255, 255, 255, 215)
@@ -145,28 +145,20 @@ end
 
 function GetControlFromKey(key)
     -- Map key names to RedM controls
-    local keyMap = {
-        ['LMENU'] = 0xD8F73058, -- Left Alt (ALT)
-        ['E'] = 0xCEFD9220,
-        ['ENTER'] = 0xC7B5340A,
-        ['BACKSPACE'] = 0x156F7119,
-        ['ESC'] = 0x156F7119
-    }
-    
-    return keyMap[key] or 0xD8F73058 -- Default to ALT
+    return Config.KeyMap[key] or Config.KeyMap['LMENU'] -- Default to ALT
 end
 
 -- Close menu on ESC
 CreateThread(function()
     while true do
-        Wait(0)
+        Wait(Config.MenuCloseCheckDelay)
         
         if isMenuOpen then
-            if IsControlJustPressed(0, 0x156F7119) then -- ESC/BACKSPACE
+            if IsControlJustPressed(0, Config.KeyMap['ESC']) then -- ESC/BACKSPACE
                 CloseGramophoneMenu()
             end
         else
-            Wait(500)
+            Wait(Config.MenuCloseAwayDelay)
         end
     end
 end)

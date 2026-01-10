@@ -202,7 +202,7 @@ end
 
 -- Initialize framework on resource start
 CreateThread(function()
-    Wait(500)
+    Wait(Config.FrameworkInitDelay)
     Framework.Detect()
 end)
 
