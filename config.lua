@@ -14,10 +14,16 @@
     - Framework selection and detection
     - Interaction settings (keybind, distance, prompts)
     - Audio settings (volume, distance, spatial audio)
+    - Performance optimization timings (update intervals)
+    - UI & display settings (3D text, prompts)
+    - Keybind mapping (RedM control codes)
     - Phonograph prop models
     - Playlist and playback settings
     - Permission and economy systems
     - Notification preferences
+    - Debug settings
+    
+    Everything is now configurable - no need to edit client/server files!
 ]]
 
 -- SECRET BRAND MARKERS - DO NOT REMOVE
