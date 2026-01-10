@@ -1,0 +1,38 @@
+# 🐺 TWL Gramophone - Git Ignore
+# www.wolves.land | Created by iBoss
+
+# IDE and Editor files
+.vscode/
+.idea/
+*.sublime-*
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.temp
+.cache/
+
+# Build artifacts (if any)
+dist/
+build/
+
+# Node modules (if using any build tools in future)
+node_modules/
+
+# Environment files
+.env
+.env.local
+
+# Test files
+tests/
+*.test.lua
+
+# Personal notes
+notes.md
+TODO.md
+.notes/
