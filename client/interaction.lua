@@ -75,7 +75,7 @@ end
 RegisterNUICallback('playTrack', function(data, cb)
     Utils.Debug("Player selected: " .. data.playlistId .. " track " .. data.trackIndex)
     
-    TriggerServerEvent('twl_gramaphone:server:playTrack', data.gramophoneNetId, data.playlistId, data.trackIndex)
+    TriggerServerEvent('twl_gramophone:server:playTrack', data.gramophoneNetId, data.playlistId, data.trackIndex)
     
     CloseGramophoneMenu()
     cb('ok')
@@ -84,7 +84,7 @@ end)
 RegisterNUICallback('stopTrack', function(data, cb)
     Utils.Debug("Player stopped track")
     
-    TriggerServerEvent('twl_gramaphone:server:stopTrack', data.gramophoneNetId)
+    TriggerServerEvent('twl_gramophone:server:stopTrack', data.gramophoneNetId)
     
     cb('ok')
 end)

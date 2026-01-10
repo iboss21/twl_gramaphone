@@ -8,7 +8,7 @@ local ActiveGramophones = {} -- [netId] = { coords, track, volume, owner, startT
 -- ════════════════════════════════════════════════════════════════
 
 -- Request to play a track
-RegisterNetEvent('twl_gramaphone:server:playTrack', function(gramophoneNetId, playlistId, trackIndex)
+RegisterNetEvent('twl_gramophone:server:playTrack', function(gramophoneNetId, playlistId, trackIndex)
     local src = source
     local player = Framework.GetPlayer(src)
     
@@ -74,18 +74,18 @@ RegisterNetEvent('twl_gramaphone:server:playTrack', function(gramophoneNetId, pl
     }
     
     -- Broadcast to all clients
-    TriggerClientEvent('twl_gramaphone:client:playTrack', -1, gramophoneNetId, playlistId, trackIndex, track)
+    TriggerClientEvent('twl_gramophone:client:playTrack', -1, gramophoneNetId, playlistId, trackIndex, track)
     
     Utils.Debug("Playing track: " .. track.title .. " on gramophone " .. gramophoneNetId)
     
     -- Send notification if enabled
     if Config.ShowNowPlaying then
-        TriggerClientEvent('twl_gramaphone:client:nowPlaying', -1, gramophoneNetId, track.title, track.artist)
+        TriggerClientEvent('twl_gramophone:client:nowPlaying', -1, gramophoneNetId, track.title, track.artist)
     end
 end)
 
 -- Request to stop track
-RegisterNetEvent('twl_gramaphone:server:stopTrack', function(gramophoneNetId)
+RegisterNetEvent('twl_gramophone:server:stopTrack', function(gramophoneNetId)
     local src = source
     
     -- Check if player is owner or admin
@@ -98,17 +98,17 @@ RegisterNetEvent('twl_gramaphone:server:stopTrack', function(gramophoneNetId)
     ActiveGramophones[gramophoneNetId] = nil
     
     -- Broadcast stop to all clients
-    TriggerClientEvent('twl_gramaphone:client:stopTrack', -1, gramophoneNetId)
+    TriggerClientEvent('twl_gramophone:client:stopTrack', -1, gramophoneNetId)
     
     Utils.Debug("Stopped gramophone " .. gramophoneNetId)
 end)
 
 -- Request gramophone data
-RegisterNetEvent('twl_gramaphone:server:requestData', function(gramophoneNetId)
+RegisterNetEvent('twl_gramophone:server:requestData', function(gramophoneNetId)
     local src = source
     
     if ActiveGramophones[gramophoneNetId] then
-        TriggerClientEvent('twl_gramaphone:client:syncData', src, gramophoneNetId, ActiveGramophones[gramophoneNetId])
+        TriggerClientEvent('twl_gramophone:client:syncData', src, gramophoneNetId, ActiveGramophones[gramophoneNetId])
     end
 end)
 
@@ -120,14 +120,14 @@ end)
 RegisterCommand('stopallgramophones', function(source, args, rawCommand)
     if source == 0 then -- Console
         ActiveGramophones = {}
-        TriggerClientEvent('twl_gramaphone:client:stopAll', -1)
+        TriggerClientEvent('twl_gramophone:client:stopAll', -1)
         print("^2[TWL Gramophone]^7 All gramophones stopped")
     else
         -- Check if player is admin (framework-specific)
         local player = Framework.GetPlayer(source)
         if player then
             ActiveGramophones = {}
-            TriggerClientEvent('twl_gramaphone:client:stopAll', -1)
+            TriggerClientEvent('twl_gramophone:client:stopAll', -1)
             Utils.Notify(source, "All gramophones stopped", 'success')
         end
     end
@@ -181,7 +181,7 @@ CreateThread(function()
                 if elapsed > (data.track.duration + 30) then
                     Utils.Debug("Auto-cleaning up gramophone " .. netId .. " (inactive)")
                     ActiveGramophones[netId] = nil
-                    TriggerClientEvent('twl_gramaphone:client:stopTrack', -1, netId)
+                    TriggerClientEvent('twl_gramophone:client:stopTrack', -1, netId)
                 end
             end
         end

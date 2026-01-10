@@ -23,7 +23,7 @@ function Utils.Notify(source, message, type)
                 type = type
             })
         else
-            TriggerClientEvent('twl_gramaphone:notify', source, message, type)
+            TriggerClientEvent('twl_gramophone:notify', source, message, type)
         end
     else
         -- Client-side

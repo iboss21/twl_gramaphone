@@ -49,7 +49,7 @@ function closeMenu() {
     currentGramophone = null;
     
     // Send close callback to client
-    $.post('https://twl_gramaphone/closeMenu', JSON.stringify({}));
+    $.post('https://twl_gramophone/closeMenu', JSON.stringify({}));
 }
 
 function updatePlaylists(playlistsData) {
@@ -139,7 +139,7 @@ function playTrack(playlistId, trackIndex, track) {
     console.log('Playing track:', playlistId, trackIndex, track.title);
     
     // Send to client
-    $.post('https://twl_gramaphone/playTrack', JSON.stringify({
+    $.post('https://twl_gramophone/playTrack', JSON.stringify({
         gramophoneNetId: currentGramophone.netId,
         playlistId: playlistId,
         trackIndex: trackIndex
@@ -150,7 +150,7 @@ function stopTrack() {
     console.log('Stopping track');
     
     // Send to client
-    $.post('https://twl_gramaphone/stopTrack', JSON.stringify({
+    $.post('https://twl_gramophone/stopTrack', JSON.stringify({
         gramophoneNetId: currentGramophone.netId
     }));
 }

@@ -53,7 +53,7 @@ end)
 -- ════════════════════════════════════════════════════════════════
 
 -- Play track on gramophone
-RegisterNetEvent('twl_gramaphone:client:playTrack', function(gramophoneNetId, playlistId, trackIndex, track)
+RegisterNetEvent('twl_gramophone:client:playTrack', function(gramophoneNetId, playlistId, trackIndex, track)
     Utils.Debug("Received play track event for gramophone " .. gramophoneNetId)
     
     -- Stop any existing audio on this gramophone
@@ -82,7 +82,7 @@ RegisterNetEvent('twl_gramaphone:client:playTrack', function(gramophoneNetId, pl
 end)
 
 -- Stop track on gramophone
-RegisterNetEvent('twl_gramaphone:client:stopTrack', function(gramophoneNetId)
+RegisterNetEvent('twl_gramophone:client:stopTrack', function(gramophoneNetId)
     if activeGramophones[gramophoneNetId] then
         exports.xsound:Destroy(activeGramophones[gramophoneNetId])
         activeGramophones[gramophoneNetId] = nil
@@ -91,7 +91,7 @@ RegisterNetEvent('twl_gramaphone:client:stopTrack', function(gramophoneNetId)
 end)
 
 -- Stop all gramophones
-RegisterNetEvent('twl_gramaphone:client:stopAll', function()
+RegisterNetEvent('twl_gramophone:client:stopAll', function()
     for netId, soundId in pairs(activeGramophones) do
         exports.xsound:Destroy(soundId)
     end
@@ -100,7 +100,7 @@ RegisterNetEvent('twl_gramaphone:client:stopAll', function()
 end)
 
 -- Show "Now Playing" notification
-RegisterNetEvent('twl_gramaphone:client:nowPlaying', function(gramophoneNetId, title, artist)
+RegisterNetEvent('twl_gramophone:client:nowPlaying', function(gramophoneNetId, title, artist)
     local gramophone = NetworkGetEntityFromNetworkId(gramophoneNetId)
     if not DoesEntityExist(gramophone) then return end
     
@@ -116,9 +116,9 @@ RegisterNetEvent('twl_gramaphone:client:nowPlaying', function(gramophoneNetId, t
 end)
 
 -- Sync data (for late joiners)
-RegisterNetEvent('twl_gramaphone:client:syncData', function(gramophoneNetId, data)
+RegisterNetEvent('twl_gramophone:client:syncData', function(gramophoneNetId, data)
     if data and data.track then
-        TriggerEvent('twl_gramaphone:client:playTrack', gramophoneNetId, data.playlistId, data.trackIndex, data.track)
+        TriggerEvent('twl_gramophone:client:playTrack', gramophoneNetId, data.playlistId, data.trackIndex, data.track)
     end
 end)
 
@@ -143,7 +143,7 @@ AddEventHandler('playerSpawned', function()
     
     -- Request sync for nearby gramophones
     for _, gramophone in pairs(nearbyGramophones) do
-        TriggerServerEvent('twl_gramaphone:server:requestData', gramophone.netId)
+        TriggerServerEvent('twl_gramophone:server:requestData', gramophone.netId)
     end
 end)
 
