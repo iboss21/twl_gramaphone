@@ -20,6 +20,54 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Falls back to keybind interaction when no target system is detected
   - Keybind interaction thread optimized when target system is active
 
+### Added - January 2026
+- **100% Comprehensive Configuration System**
+  - ALL hardcoded values moved to config.lua
+  - Configurable messages and notification text
+  - Configurable resource names for frameworks and target systems
+  - Configurable event names for anti-cheat/obfuscation
+  - Configurable timing delays for all threads
+  - Configurable NUI action and callback names
+  - Configurable admin commands
+  - Configurable target system settings (icons, labels, distances)
+  - No need to edit client or server files - everything in config!
+
+- **Prop Validation System (Prevents Polyzone/MLO Interference)**
+  - Added `IsValidGramophoneProp()` validation function
+  - 8-layer comprehensive validation:
+    1. Entity existence check
+    2. Entity type validation (must be object, not ped/vehicle)
+    3. Physical object validation (prevents dummy/invisible entities)
+    4. Model hash verification (must match configured models)
+    5. Attachment check (prevents carried/attached props)
+    6. Coordinate validation (prevents 0,0,0 MLO issues)
+    7. Ground placement validation (prevents floating entities)
+    8. Network ID validation (ensures multiplayer sync)
+  - All validation checks configurable via config.lua
+  - Integrated into both keybind and target interaction systems
+  - Prevents accidental interaction with polyzones, MLOs, or invalid entities
+
+### Configuration Options Added
+- `Config.ValidatePropEntity` - Enable/disable prop validation
+- `Config.ValidateGroundPlacement` - Validate prop is on ground
+- `Config.MaxGroundDistance` - Max distance from ground (meters)
+- `Config.RequireNetworkId` - Require valid network ID
+- `Config.AllowAttachedProps` - Allow props attached to peds
+- `Config.ValidatePhysicalObject` - Validate entity is physical
+- `Config.TargetZoneName` - Unique name for target zones
+- `Config.TargetIcon` - FontAwesome icon for target
+- `Config.TargetLabel` - Label shown in target system
+- `Config.TargetLoadWaitTime` - Wait time for target resources
+- `Config.TargetActiveDelay` - Thread delay when target active
+- `Config.Prompt3DScaleMultiplier` - Scale multiplier for 3D text
+- `Config.Prompt3DMaxScale` - Maximum scale cap
+- `Config.Messages` - Complete message system (50+ messages)
+- `Config.NUIActions` - NUI action names
+- `Config.NUICallbacks` - NUI callback names
+- `Config.Events` - Client/server event names
+- `Config.Commands` - Admin command names
+- `Config.FrameworkResources` - Framework resource names
+
 ### Planning Phase - January 2026
 
 #### Added
