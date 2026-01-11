@@ -89,7 +89,9 @@ restart twl_gramaphone
 ### For Players
 
 1. **Approach** any gramophone prop (default: 3 meters)
-2. **Press ALT** (configurable) to open the music menu
+2. **Interact** using one of these methods:
+   - **Press ALT** (configurable keybind) when close to the gramophone
+   - **Use target system** (ox_target or rsg-target) if installed - look at the gramophone and select "Use Gramophone"
 3. **Select** a playlist from the vintage-styled interface
 4. **Choose** a track to play
 5. **Enjoy** authentic 1899-era music with nearby players!
@@ -180,7 +182,8 @@ The script automatically detects your framework and adapts accordingly. No code 
 ## 🌟 Features in Detail
 
 ### Core Functionality
-- ✨ Keybind-based interaction (ALT key default)
+- ✨ Keybind-based interaction (ALT key default) OR target system (ox_target/rsg-target)
+- 🎯 Automatic target system detection with fallback to keybind
 - 🎵 Multiple phonograph support simultaneously
 - 📡 Synchronized audio across all nearby players
 - 🔊 3D positional audio with distance falloff
