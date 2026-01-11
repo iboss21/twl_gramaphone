@@ -29,14 +29,18 @@ Playlists = {
         description = "Scott Joplin classics and lively ragtime piano",
         icon = "🎹",
         tracks = {
-            { title = "Maple Leaf Rag", artist = "Scott Joplin", url = "https://www.youtube.com/watch?v=pMAtL7n_-rc", duration = 209 },
-            { title = "The Entertainer", artist = "Scott Joplin", url = "https://www.youtube.com/watch?v=fPmruHc4S9Q", duration = 181 },
-            { title = "Elite Syncopations", artist = "Scott Joplin", url = "https://www.youtube.com/watch?v=gP6uVQghuRY", duration = 187 },
-            { title = "The Ragtime Dance", artist = "Scott Joplin", url = "https://www.youtube.com/watch?v=9_YkeqlzgUw", duration = 165 },
-            { title = "Fig Leaf Rag", artist = "Scott Joplin", url = "https://www.youtube.com/watch?v=9_YkeqlzgUw", duration = 178 },
-            { title = "Original Rags", artist = "Scott Joplin", url = "https://www.youtube.com/watch?v=XrFvIFZWBqI", duration = 155 },
-            { title = "Easy Winners", artist = "Scott Joplin", url = "https://www.youtube.com/watch?v=7WZ0ggHjvHo", duration = 195 },
-            { title = "Peacherine Rag", artist = "Scott Joplin", url = "https://www.youtube.com/watch?v=kbpwR6g50DU", duration = 172 }
+            -- IMPORTANT: Replace these placeholder URLs with direct .mp3/.ogg links
+            -- xsound does NOT support YouTube URLs - use direct audio file URLs only
+            -- Example: "https://yourserver.com/audio/maple_leaf_rag.mp3"
+            -- Or use Archive.org public domain recordings
+            { title = "Maple Leaf Rag", artist = "Scott Joplin", url = "https://upload.wikimedia.org/wikipedia/commons/6/68/Maple_leaf_rag_-_played_by_Scott_Joplin_1916.ogg", duration = 209 },
+            { title = "The Entertainer", artist = "Scott Joplin", url = "https://upload.wikimedia.org/wikipedia/commons/1/1b/The_Entertainer_%28performed_by_the_U.S._Marine_Band%29.ogg", duration = 181 },
+            { title = "Elite Syncopations", artist = "Scott Joplin", url = "REPLACE_WITH_DIRECT_AUDIO_URL", duration = 187 },
+            { title = "The Ragtime Dance", artist = "Scott Joplin", url = "REPLACE_WITH_DIRECT_AUDIO_URL", duration = 165 },
+            { title = "Fig Leaf Rag", artist = "Scott Joplin", url = "REPLACE_WITH_DIRECT_AUDIO_URL", duration = 178 },
+            { title = "Original Rags", artist = "Scott Joplin", url = "REPLACE_WITH_DIRECT_AUDIO_URL", duration = 155 },
+            { title = "Easy Winners", artist = "Scott Joplin", url = "REPLACE_WITH_DIRECT_AUDIO_URL", duration = 195 },
+            { title = "Peacherine Rag", artist = "Scott Joplin", url = "REPLACE_WITH_DIRECT_AUDIO_URL", duration = 172 }
         }
     },
     {

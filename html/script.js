@@ -8,6 +8,9 @@ const CREATOR = "iBoss";
 const WEBSITE = "www.wolves.land";
 const PROJECT = "The Land of Wolves - Gramophone System";
 
+// Resource name - must match folder name (twl_gramaphone)
+const RESOURCE_NAME = "twl_gramaphone";
+
 let currentGramophone = null;
 let playlists = [];
 let config = {};
@@ -55,8 +58,8 @@ function closeMenu() {
     $('#gramophone-menu').addClass('hidden');
     currentGramophone = null;
     
-    // Send close callback to client
-    $.post('https://twl_gramophone/closeMenu', JSON.stringify({}));
+    // Send close callback to client - use correct resource name
+    $.post(`https://${RESOURCE_NAME}/closeMenu`, JSON.stringify({}));
 }
 
 function updatePlaylists(playlistsData) {
@@ -145,8 +148,8 @@ function renderPlaylists() {
 function playTrack(playlistId, trackIndex, track) {
     console.log('Playing track:', playlistId, trackIndex, track.title);
     
-    // Send to client
-    $.post('https://twl_gramophone/playTrack', JSON.stringify({
+    // Send to client - use correct resource name
+    $.post(`https://${RESOURCE_NAME}/playTrack`, JSON.stringify({
         gramophoneNetId: currentGramophone.netId,
         playlistId: playlistId,
         trackIndex: trackIndex
@@ -156,8 +159,8 @@ function playTrack(playlistId, trackIndex, track) {
 function stopTrack() {
     console.log('Stopping track');
     
-    // Send to client
-    $.post('https://twl_gramophone/stopTrack', JSON.stringify({
+    // Send to client - use correct resource name
+    $.post(`https://${RESOURCE_NAME}/stopTrack`, JSON.stringify({
         gramophoneNetId: currentGramophone.netId
     }));
 }

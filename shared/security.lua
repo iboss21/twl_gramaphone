@@ -38,11 +38,11 @@ Security = {
 -- ════════════════════════════════════════════════════════════════
 
 function Security.ValidateIntegrity()
-    -- Check 1: Resource name validation (www.wolves.land)
-    if Security.ResourceName ~= Security.ExpectedName then
-        Security.SelfDestruct("RESOURCE_NAME_MISMATCH")
-        return false
-    end
+    -- Check 1: Resource name validation - DISABLED for flexibility
+    -- if Security.ResourceName ~= Security.ExpectedName then
+    --     Security.SelfDestruct("RESOURCE_NAME_MISMATCH")
+    --     return false
+    -- end
     
     -- Check 2: Brand validation markers (iBoss)
     if not Security.ValidateBrandMarkers() then
@@ -185,14 +185,7 @@ function Security.StartMonitoring()
         while Security.Initialized do
             Wait(Config.SecurityMonitoringInterval) -- Check every 30 seconds
             
-            -- Verify resource name hasn't changed
-            local currentName = GetCurrentResourceName()
-            if currentName ~= Security.ExpectedName then
-                print("^1[The Land of Wolves]^7 Resource name changed during runtime!")
-                Security.SelfDestruct("RUNTIME_NAME_CHANGE")
-                break
-            end
-            
+            -- Runtime checks disabled for flexibility
             -- Verify brand markers still intact
             if not Security.ValidateBrandMarkers() then
                 print("^1[www.wolves.land]^7 Brand markers validation failed!")
