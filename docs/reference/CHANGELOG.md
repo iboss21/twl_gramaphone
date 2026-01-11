@@ -6,6 +6,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed - January 2026
+- Fixed 3D text being too large and visible from far away
+  - Added `Prompt3DMaxDistance` config option (default: 2.5 meters)
+  - Reduced text scale multiplier from 2.0 to 0.5 for more reasonable sizing
+  - Added maximum scale cap of 1.0 to prevent oversized text
+  - Reduced default text scale from 0.35 to 0.25
+  - 3D text now only displays when within configured max distance
+- Added ox_target and rsg-target integration support
+  - New `Config.UseTarget` option (default: true) to enable target systems
+  - Automatic detection of ox_target and rsg-target resources
+  - Target zones automatically created for all gramophone models
+  - Falls back to keybind interaction when no target system is detected
+  - Keybind interaction thread optimized when target system is active
+
 ### Planning Phase - January 2026
 
 #### Added
