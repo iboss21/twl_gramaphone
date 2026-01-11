@@ -30,20 +30,20 @@ local targetSystemName = nil
 -- ════════════════════════════════════════════════════════════════
 
 CreateThread(function()
-    Wait(1000) -- Wait for resources to load
+    Wait(Config.TargetLoadWaitTime) -- Wait for resources to load
     
     -- Auto-detect target system
     if Config.UseTarget then
-        if GetResourceState('ox_target') == 'started' then
+        if GetResourceState(Config.TargetResourceNames.ox_target) == 'started' then
             targetSystemDetected = true
             targetSystemName = 'ox_target'
-            Utils.Debug("ox_target detected and will be used")
-        elseif GetResourceState('rsg-target') == 'started' then
+            Utils.Debug(Config.Messages.target_detected_ox)
+        elseif GetResourceState(Config.TargetResourceNames.rsg_target) == 'started' then
             targetSystemDetected = true
             targetSystemName = 'rsg-target'
-            Utils.Debug("rsg-target detected and will be used")
+            Utils.Debug(Config.Messages.target_detected_rsg)
         else
-            Utils.Debug("No target system detected, using keybind interaction")
+            Utils.Debug(Config.Messages.target_no_system)
         end
         
         -- Setup target zones for gramophones if target system is available
@@ -58,11 +58,21 @@ function SetupTargetZones()
         if targetSystemName == 'ox_target' then
             exports.ox_target:addModel(model, {
                 {
-                    name = 'twl_gramophone_interact',
-                    icon = 'fas fa-music',
-                    label = 'Use Gramophone',
+                    name = Config.TargetZoneName or 'twl_gramophone_interact',
+                    icon = Config.TargetIcon,
+                    label = Config.TargetLabel,
                     distance = Config.InteractionDistance,
+                    canInteract = function(entity, distance, data)
+                        -- Validate prop before allowing interaction
+                        return IsValidGramophoneProp(entity)
+                    end,
                     onSelect = function(data)
+                        -- Double-check validation before opening menu
+                        if not IsValidGramophoneProp(data.entity) then
+                            Utils.Debug("Invalid prop detected in target interaction - blocked")
+                            return
+                        end
+                        
                         local gramophone = {
                             entity = data.entity,
                             netId = NetworkGetNetworkIdFromEntity(data.entity),
@@ -78,10 +88,20 @@ function SetupTargetZones()
             exports['rsg-target']:AddTargetModel(model, {
                 options = {
                     {
-                        type = "client",
-                        icon = "fas fa-music",
-                        label = "Use Gramophone",
+                        type = Config.TargetType,
+                        icon = Config.TargetIcon,
+                        label = Config.TargetLabel,
+                        canInteract = function(entity, distance, data)
+                            -- Validate prop before allowing interaction
+                            return IsValidGramophoneProp(entity)
+                        end,
                         action = function(entity)
+                            -- Double-check validation before opening menu
+                            if not IsValidGramophoneProp(entity) then
+                                Utils.Debug("Invalid prop detected in target interaction - blocked")
+                                return
+                            end
+                            
                             local gramophone = {
                                 entity = entity,
                                 netId = NetworkGetNetworkIdFromEntity(entity),
@@ -98,7 +118,7 @@ function SetupTargetZones()
         end
     end
     
-    Utils.Debug("Target zones setup for " .. #Config.PhonographModels .. " gramophone models")
+    Utils.Debug(string.format(Config.Messages.target_zones_setup, #Config.PhonographModels))
 end
 
 -- ════════════════════════════════════════════════════════════════
@@ -128,7 +148,7 @@ CreateThread(function()
                 Wait(Config.PromptAwayDelay)
             end
         else
-            Wait(1000) -- If target system is active, check less frequently
+            Wait(Config.TargetActiveDelay) -- If target system is active, check less frequently
         end
     end
 end)

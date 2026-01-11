@@ -65,18 +65,21 @@ CreateThread(function()
             local gramophone = GetClosestObjectOfType(playerCoords.x, playerCoords.y, playerCoords.z, Config.InteractionDistance, model, false, false, false)
             
             if gramophone ~= 0 then
-                local gramophoneCoords = GetEntityCoords(gramophone)
-                local distance = #(playerCoords - gramophoneCoords)
-                
-                if distance <= Config.InteractionDistance then
-                    local netId = NetworkGetNetworkIdFromEntity(gramophone)
-                    table.insert(nearbyGramophones, {
-                        entity = gramophone,
-                        netId = netId,
-                        coords = gramophoneCoords,
-                        distance = distance,
-                        model = model
-                    })
+                -- IMPORTANT: Validate that this is actually a prop entity, not a polyzone or MLO
+                if IsValidGramophoneProp(gramophone) then
+                    local gramophoneCoords = GetEntityCoords(gramophone)
+                    local distance = #(playerCoords - gramophoneCoords)
+                    
+                    if distance <= Config.InteractionDistance then
+                        local netId = NetworkGetNetworkIdFromEntity(gramophone)
+                        table.insert(nearbyGramophones, {
+                            entity = gramophone,
+                            netId = netId,
+                            coords = gramophoneCoords,
+                            distance = distance,
+                            model = model
+                        })
+                    end
                 end
             end
         end
@@ -195,6 +198,89 @@ function GetNearestGramophone()
     end)
     
     return nearbyGramophones[1]
+end
+
+-- ════════════════════════════════════════════════════════════════
+--  PROP VALIDATION - Ensures only actual props are interacted with
+-- ════════════════════════════════════════════════════════════════
+
+function IsValidGramophoneProp(entity)
+    -- Skip validation if disabled in config
+    if not Config.ValidatePropEntity then
+        return true
+    end
+    
+    -- Validate that the entity is a valid object/prop, not a polyzone or MLO
+    
+    -- Check 1: Entity must exist
+    if not DoesEntityExist(entity) then
+        if Config.Debug then Utils.Debug("Entity doesn't exist - rejected") end
+        return false
+    end
+    
+    -- Check 2: Must be an object type (not ped, vehicle, etc.)
+    local entityType = GetEntityType(entity)
+    if entityType ~= 3 then -- Type 3 = Object
+        if Config.Debug then Utils.Debug("Entity is not an object (type: " .. entityType .. ") - rejected") end
+        return false
+    end
+    
+    -- Check 3: Must be a physical entity (not a dummy or invisible entity)
+    if Config.ValidatePhysicalObject and not IsEntityAPhysicalObject(entity) then
+        if Config.Debug then Utils.Debug("Entity is not a physical object - rejected") end
+        return false
+    end
+    
+    -- Check 4: Validate model hash matches our expected gramophone models
+    local model = GetEntityModel(entity)
+    local isValidModel = false
+    for _, configModel in ipairs(Config.PhonographModels) do
+        if model == configModel then
+            isValidModel = true
+            break
+        end
+    end
+    
+    if not isValidModel then
+        if Config.Debug then Utils.Debug("Entity model doesn't match configured models - rejected") end
+        return false
+    end
+    
+    -- Check 5: Entity must not be attached to a ped (carried item) unless allowed
+    if not Config.AllowAttachedProps and IsEntityAttachedToAnyPed(entity) then
+        if Config.Debug then Utils.Debug("Entity is attached to a ped - rejected") end
+        return false
+    end
+    
+    -- Check 6: Entity should have valid coordinates (not 0,0,0 which could indicate MLO issues)
+    local coords = GetEntityCoords(entity)
+    if coords.x == 0.0 and coords.y == 0.0 and coords.z == 0.0 then
+        if Config.Debug then Utils.Debug("Entity has invalid coordinates (0,0,0) - rejected") end
+        return false
+    end
+    
+    -- Check 7: Ensure entity is on the ground or placed (not floating in void)
+    if Config.ValidateGroundPlacement then
+        local groundZ = 0.0
+        local foundGround, groundZ = GetGroundZFor_3dCoord(coords.x, coords.y, coords.z + 5.0, groundZ, false)
+        if foundGround and math.abs(coords.z - groundZ) > Config.MaxGroundDistance then
+            if Config.Debug then Utils.Debug("Entity is too far from ground - possible MLO issue - rejected") end
+            return false
+        end
+    end
+    
+    -- Check 8: Network ID validation (for multiplayer sync)
+    if Config.RequireNetworkId then
+        local netId = NetworkGetNetworkIdFromEntity(entity)
+        if netId == 0 or netId == nil then
+            if Config.Debug then Utils.Debug("Entity has invalid network ID - rejected") end
+            return false
+        end
+    end
+    
+    -- All checks passed - this is a valid gramophone prop
+    if Config.Debug then Utils.Debug("Entity validated as proper gramophone prop") end
+    return true
 end
 
 exports('GetNearestGramophone', GetNearestGramophone)
