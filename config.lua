@@ -43,7 +43,9 @@ Config.Framework = "auto" -- auto, lxr-core, rsg-core, vorp, qbr, standalone
 Config.InteractionKey = 'LMENU' -- ALT key (LMENU in RedM)
 Config.InteractionDistance = 3.0 -- meters - distance to interact with phonograph
 Config.UseThirdEye = false -- Use third-eye/target system (if available)
-Config.ShowPrompt3D = true -- Show 3D prompt above phonograph
+Config.UseTarget = true -- Use ox_target/rsg-target system (auto-detected)
+Config.ShowPrompt3D = true -- Show 3D prompt above phonograph (only when UseTarget is false)
+Config.Prompt3DMaxDistance = 2.5 -- Maximum distance to show 3D text (should be less than InteractionDistance)
 
 -- ═══════════════════════════════════════════════════════════════
 --  AUDIO SETTINGS
@@ -116,7 +118,7 @@ Config.ServerStartupDelay = 1000 -- milliseconds - delay before server initializ
 --  UI & DISPLAY SETTINGS
 -- ═══════════════════════════════════════════════════════════════
 Config.Prompt3DHeightOffset = 1.0 -- units above gramophone to show 3D text
-Config.Prompt3DTextScale = 0.35 -- scale of 3D prompt text
+Config.Prompt3DTextScale = 0.25 -- scale of 3D prompt text (reduced from 0.35)
 Config.Prompt3DText = "Press ~y~[ALT]~w~ to use Gramophone" -- text shown in 3D prompt
 Config.PromptMenuOpenDelay = 0 -- milliseconds - main thread delay when checking for menu open
 Config.PromptAwayDelay = 500 -- milliseconds - main thread delay when player is away from gramophone

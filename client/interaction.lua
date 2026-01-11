@@ -22,30 +22,113 @@
 local INTERACTION_BRAND = "iBoss_TheLandOfWolves_" .. "www.wolves.land"
 
 local isMenuOpen = false
+local targetSystemDetected = false
+local targetSystemName = nil
 
 -- ════════════════════════════════════════════════════════════════
---  KEYBIND INTERACTION
+--  TARGET SYSTEM DETECTION & SETUP
+-- ════════════════════════════════════════════════════════════════
+
+CreateThread(function()
+    Wait(1000) -- Wait for resources to load
+    
+    -- Auto-detect target system
+    if Config.UseTarget then
+        if GetResourceState('ox_target') == 'started' then
+            targetSystemDetected = true
+            targetSystemName = 'ox_target'
+            Utils.Debug("ox_target detected and will be used")
+        elseif GetResourceState('rsg-target') == 'started' then
+            targetSystemDetected = true
+            targetSystemName = 'rsg-target'
+            Utils.Debug("rsg-target detected and will be used")
+        else
+            Utils.Debug("No target system detected, using keybind interaction")
+        end
+        
+        -- Setup target zones for gramophones if target system is available
+        if targetSystemDetected then
+            SetupTargetZones()
+        end
+    end
+end)
+
+function SetupTargetZones()
+    for _, model in ipairs(Config.PhonographModels) do
+        if targetSystemName == 'ox_target' then
+            exports.ox_target:addModel(model, {
+                {
+                    name = 'twl_gramophone_interact',
+                    icon = 'fas fa-music',
+                    label = 'Use Gramophone',
+                    distance = Config.InteractionDistance,
+                    onSelect = function(data)
+                        local gramophone = {
+                            entity = data.entity,
+                            netId = NetworkGetNetworkIdFromEntity(data.entity),
+                            coords = GetEntityCoords(data.entity),
+                            distance = #(GetEntityCoords(PlayerPedId()) - GetEntityCoords(data.entity)),
+                            model = GetEntityModel(data.entity)
+                        }
+                        OpenGramophoneMenu(gramophone)
+                    end
+                }
+            })
+        elseif targetSystemName == 'rsg-target' then
+            exports['rsg-target']:AddTargetModel(model, {
+                options = {
+                    {
+                        type = "client",
+                        icon = "fas fa-music",
+                        label = "Use Gramophone",
+                        action = function(entity)
+                            local gramophone = {
+                                entity = entity,
+                                netId = NetworkGetNetworkIdFromEntity(entity),
+                                coords = GetEntityCoords(entity),
+                                distance = #(GetEntityCoords(PlayerPedId()) - GetEntityCoords(entity)),
+                                model = GetEntityModel(entity)
+                            }
+                            OpenGramophoneMenu(gramophone)
+                        end
+                    }
+                },
+                distance = Config.InteractionDistance
+            })
+        end
+    end
+    
+    Utils.Debug("Target zones setup for " .. #Config.PhonographModels .. " gramophone models")
+end
+
+-- ════════════════════════════════════════════════════════════════
+--  KEYBIND INTERACTION (only if target system is not used)
 -- ════════════════════════════════════════════════════════════════
 
 CreateThread(function()
     while true do
         Wait(Config.PromptMenuOpenDelay)
         
-        local nearestGramophone = GetNearestGramophone()
-        
-        if nearestGramophone and not isMenuOpen then
-            -- Show 3D prompt if enabled
-            if Config.ShowPrompt3D then
-                DrawText3D(nearestGramophone.coords.x, nearestGramophone.coords.y, nearestGramophone.coords.z + Config.Prompt3DHeightOffset, 
-                    Config.Prompt3DText)
-            end
+        -- Only use keybind interaction if target system is not active
+        if not targetSystemDetected or not Config.UseTarget then
+            local nearestGramophone = GetNearestGramophone()
             
-            -- Check for keybind press
-            if IsControlJustPressed(0, GetControlFromKey(Config.InteractionKey)) then
-                OpenGramophoneMenu(nearestGramophone)
+            if nearestGramophone and not isMenuOpen then
+                -- Show 3D prompt if enabled and within max distance
+                if Config.ShowPrompt3D and nearestGramophone.distance <= Config.Prompt3DMaxDistance then
+                    DrawText3D(nearestGramophone.coords.x, nearestGramophone.coords.y, nearestGramophone.coords.z + Config.Prompt3DHeightOffset, 
+                        Config.Prompt3DText)
+                end
+                
+                -- Check for keybind press
+                if IsControlJustPressed(0, GetControlFromKey(Config.InteractionKey)) then
+                    OpenGramophoneMenu(nearestGramophone)
+                end
+            else
+                Wait(Config.PromptAwayDelay)
             end
         else
-            Wait(Config.PromptAwayDelay)
+            Wait(1000) -- If target system is active, check less frequently
         end
     end
 end)
@@ -123,9 +206,20 @@ function DrawText3D(x, y, z, text)
     local px, py, pz = table.unpack(GetGameplayCamCoord())
     local dist = #(vector3(px, py, pz) - vector3(x, y, z))
     
-    local scale = (1 / dist) * 2
+    -- Only show if within max distance
+    if dist > Config.Prompt3DMaxDistance then
+        return
+    end
+    
+    -- Adjusted scale calculation to make text smaller and more reasonable
+    local scale = (1 / dist) * 0.5  -- Reduced from 2 to 0.5
     local fov = (1 / GetGameplayCamFov()) * 100
     scale = scale * fov
+    
+    -- Cap the maximum scale to prevent text from being too large
+    if scale > 1.0 then
+        scale = 1.0
+    end
     
     if onScreen then
         -- RedM compatible text rendering natives
