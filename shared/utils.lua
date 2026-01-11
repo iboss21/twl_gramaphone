@@ -53,12 +53,12 @@ function Utils.Notify(source, message, type)
                 type = type
             })
         else
-            -- Fallback to basic notification
+            -- Fallback to basic notification (RedM compatible)
             SetTextScale(0.5, 0.5)
             SetTextColor(255, 255, 255, 255)
-            BeginTextCommandDisplayText("STRING")
-            AddTextComponentSubstringPlayerName(message)
-            EndTextCommandDisplayText(0.5, 0.9)
+            local str = CreateVarString(10, "LITERAL_STRING", message)
+            SetTextCentre(true)
+            DisplayText(str, 0.5, 0.9)
         end
     end
 end
