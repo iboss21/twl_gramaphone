@@ -226,9 +226,12 @@ function IsValidGramophoneProp(entity)
     end
     
     -- Check 3: Must be a physical entity (not a dummy or invisible entity)
-    if Config.ValidatePhysicalObject and not IsEntityAPhysicalObject(entity) then
-        if Config.Debug then Utils.Debug("Entity is not a physical object - rejected") end
-        return false
+    if Config.ValidatePhysicalObject then
+        -- Check if entity is visible (not invisible/dummy entity)
+        if not IsEntityVisible(entity) then
+            if Config.Debug then Utils.Debug("Entity is not visible - rejected") end
+            return false
+        end
     end
     
     -- Check 4: Validate model hash matches our expected gramophone models
