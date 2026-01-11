@@ -128,18 +128,15 @@ function DrawText3D(x, y, z, text)
     scale = scale * fov
     
     if onScreen then
-        SetTextScale(0.0 * scale, Config.Prompt3DTextScale * scale)
-        SetTextFont(4)
-        SetTextProportional(1)
-        SetTextColour(255, 255, 255, 215)
-        SetTextDropshadow(0, 0, 0, 0, 255)
-        SetTextEdge(2, 0, 0, 0, 150)
-        SetTextDropShadow()
-        SetTextOutline()
-        SetTextEntry("STRING")
-        SetTextCentre(1)
-        AddTextComponentString(text)
-        DrawText(_x, _y)
+        -- RedM compatible text rendering natives
+        SetTextScale(Config.Prompt3DTextScale * scale, Config.Prompt3DTextScale * scale)
+        SetTextColor(255, 255, 255, 215)
+        SetTextCentre(true)
+        SetTextDropshadow(1, 0, 0, 0, 255)
+        
+        -- Use RedM text rendering
+        local str = CreateVarString(10, "LITERAL_STRING", text)
+        DisplayText(str, _x, _y)
     end
 end
 
