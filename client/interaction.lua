@@ -129,7 +129,7 @@ function DrawText3D(x, y, z, text)
     
     if onScreen then
         -- RedM compatible text rendering natives
-        SetTextScale(0.0 * scale, Config.Prompt3DTextScale * scale)
+        SetTextScale(Config.Prompt3DTextScale * scale, Config.Prompt3DTextScale * scale)
         SetTextColor(255, 255, 255, 215)
         SetTextCentre(true)
         SetTextDropshadow(1, 0, 0, 0, 255)
